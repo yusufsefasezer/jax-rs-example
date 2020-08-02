@@ -1,0 +1,8 @@
+<!-- Contact list -->
+<nav style="overflow-y: auto; height: 550px;">
+  <ul class="list-group list-group-flush">
+    <app-contact
+      *ngFor="let contact of wrapperService.globalService.contacts|search: wrapperService.globalService.searchTerm"
+      [contact]="contact"></app-contact>
+  </ul>
+</nav>

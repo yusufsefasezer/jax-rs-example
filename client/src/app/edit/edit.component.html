@@ -1,0 +1,81 @@
+<div class="m-2">
+
+    <!-- Contact form -->
+    <form [formGroup]="wrapperService.globalService.contactForm" novalidate="novalidate">
+  
+      <!-- Photo -->
+      <div class="form-group text-center">
+        <label for="photo" class="btn border">
+          <img height="100" [src]="sanitizer.bypassSecurityTrustUrl(wrapperService.globalService.currentContact.photo)"
+            [alt]="wrapperService.globalService.currentContact.name" />
+        </label>
+        <input type="file" formControlName="photo" class="d-none" id="photo"
+          (change)="wrapperService.showImage($event)" />
+      </div>
+  
+      <!-- Name -->
+      <div class="form-group row">
+        <label for="fullname" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+          <input type="text" formControlName="name" class="form-control" autofocus="autofocus" id="fullname"
+            name="fullname" placeholder="Enter full name" required="required"
+            [(ngModel)]="wrapperService.globalService.currentContact.name"
+            [ngClass]="{'is-invalid': f.name.touched && f.name.invalid}" />
+        </div>
+      </div>
+  
+      <!-- Email -->
+      <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+          <input type="email" formControlName="email" class="form-control" id="email" name="email"
+            placeholder="Enter email address" required="required"
+            [(ngModel)]="wrapperService.globalService.currentContact.email"
+            [ngClass]="{'is-invalid': f.email.touched && f.email.invalid}" />
+        </div>
+      </div>
+  
+      <!-- Phone -->
+      <div class="form-group row">
+        <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+        <div class="col-sm-10">
+          <input type="tel" formControlName="phone" class="form-control" id="phone" name="phone"
+            placeholder="Enter phone number" required="required" minlength="10"
+            [(ngModel)]="wrapperService.globalService.currentContact.phone"
+            [ngClass]="{'is-invalid': f.phone.touched && f.phone.invalid}" />
+        </div>
+      </div>
+  
+      <!-- URL -->
+      <div class="form-group row">
+        <label for="url" class="col-sm-2 col-form-label">Website</label>
+        <div class="col-sm-10">
+          <input type="url" formControlName="url" class="form-control" id="url" name="url" placeholder="Enter URL"
+            [(ngModel)]="wrapperService.globalService.currentContact.url"
+            [ngClass]="{'is-invalid': f.url.touched && f.url.invalid}" />
+        </div>
+      </div>
+  
+      <!-- Address -->
+      <div class="form-group row">
+        <label for="address" class="col-sm-2 col-form-label">Address</label>
+        <div class="col-sm-10">
+          <textarea rows="3" formControlName="address" class="form-control" id="address" name="address"
+            placeholder="Enter address" [(ngModel)]="wrapperService.globalService.currentContact.address"
+            [ngClass]="{'is-invalid': f.address.touched && f.address.invalid}"></textarea>
+        </div>
+      </div>
+  
+      <!-- Note -->
+      <div class="form-group row">
+        <label for="notes" class="col-sm-2 col-form-label">Notes</label>
+        <div class="col-sm-10">
+          <textarea rows="3" formControlName="notes" class="form-control" id="notes" name="notes" placeholder="Enter note"
+            [(ngModel)]="wrapperService.globalService.currentContact.notes"
+            [ngClass]="{'is-invalid': f.notes.touched && f.notes.invalid}"></textarea>
+        </div>
+      </div>
+  
+    </form>
+  
+  </div>

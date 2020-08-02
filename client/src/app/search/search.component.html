@@ -1,0 +1,11 @@
+<!-- Search form -->
+<form class="p-2">
+  <label class="sr-only" for="search">Search</label>
+  <div class="input-group">
+    <input class="form-control form-control-md" type="search" id="search" name="search"
+      [(ngModel)]="wrapperService.globalService.searchTerm" placeholder="Type to search" />
+    <div class="input-group-append">
+      <div class="input-group-text bg-transparent"><i class="fas fa-search"></i></div>
+    </div>
+  </div>
+</form>

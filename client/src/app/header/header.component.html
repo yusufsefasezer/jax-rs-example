@@ -1,0 +1,19 @@
+<!-- Header -->
+<header class="row bg-light border-bottom">
+
+  <!-- Left -->
+  <div class="col-sm p-2 border-right clearfix">
+    <a [routerLink]="['/add']" class="btn btn-sm btn-outline-dark float-left rounded-circle" title="Add new contact"><i
+        class="fas fa-plus"></i></a>
+    <a [routerLink]="['/']" (click)="wrapperService.globalService.selectContact()"
+      class="btn btn-sm btn-outline-dark float-right rounded-circle" title="Select contact"><i
+        class="fas fa-check-double"></i></a>
+    <div class="text-center">All Contacts</div>
+  </div>
+
+  <!-- Right -->
+  <div class="col-sm-8 p-2">
+    <h1 class="h5 m-0 text-center">{{wrapperService.globalService.title}}</h1>
+  </div>
+
+</header>

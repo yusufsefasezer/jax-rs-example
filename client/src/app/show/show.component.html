@@ -1,0 +1,70 @@
+<div class="m-2">
+
+  <!-- Contact form -->
+  <form>
+
+    <!-- Photo -->
+    <div class="form-group text-center">
+      <label class="btn border">
+        <img height="100" [src]="sanitizer.bypassSecurityTrustUrl(wrapperService.globalService.currentContact.photo)"
+          [alt]="wrapperService.globalService.currentContact.name" />
+      </label>
+    </div>
+
+    <!-- Name -->
+    <div class="form-group row">
+      <label for="fullname" class="col-sm-2 col-form-label">Name</label>
+      <div class="col-sm-10">
+        <input type="text" readonly="readonly" class="form-control-plaintext" autofocus="autofocus" id="fullname"
+          [(ngModel)]="wrapperService.globalService.currentContact.name" name="fullname" />
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group row">
+      <label for="email" class="col-sm-2 col-form-label">Email</label>
+      <div class="col-sm-10">
+        <input type="email" readonly="readonly" class="form-control-plaintext" id="email"
+          [(ngModel)]="wrapperService.globalService.currentContact.email" name="email" />
+      </div>
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group row">
+      <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+      <div class="col-sm-10">
+        <input type="tel" readonly="readonly" class="form-control-plaintext" id="phone"
+          [(ngModel)]="wrapperService.globalService.currentContact.phone" name="phone" />
+      </div>
+    </div>
+
+    <!-- URL -->
+    <div class="form-group row">
+      <label for="url" class="col-sm-2 col-form-label">Website</label>
+      <div class="col-sm-10">
+        <input type="url" readonly="readonly" class="form-control-plaintext" id="url"
+          [(ngModel)]="wrapperService.globalService.currentContact.url" name="url" />
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="form-group row">
+      <label for="address" class="col-sm-2 col-form-label">Address</label>
+      <div class="col-sm-10">
+        <textarea rows="3" readonly="readonly" class="form-control-plaintext" id="address"
+          [(ngModel)]="wrapperService.globalService.currentContact.address" name="address"></textarea>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="form-group row">
+      <label for="notes" class="col-sm-2 col-form-label">Notes</label>
+      <div class="col-sm-10">
+        <textarea rows="3" readonly="readonly" class="form-control-plaintext" id="notes"
+          [(ngModel)]="wrapperService.globalService.currentContact.notes" name="notes"></textarea>
+      </div>
+    </div>
+
+  </form>
+
+</div>

@@ -1,0 +1,15 @@
+<!-- Contact -->
+<li class="list-group-item list-group-item-action">
+  <div class="row">
+    <div class="col-2">
+      <img class="rounded-circle" width="50" [src]="sanitizer.bypassSecurityTrustUrl(contact.photo)" [alt]="contact.name" />
+    </div>
+    <div class="col">
+      <h4 class="h6"><a [routerLink]="['contact', contact.id]">{{contact.name}}</a></h4>
+      <small>{{wrapperService.globalService.formatPhoneNumber(contact.phone)}}</small>
+    </div>
+    <div class="col-2" *ngIf="wrapperService.globalService.isSelect">
+      <input type="checkbox" class="form-control" [(ngModel)]="contact.checked" (change)="wrapperService.globalService.filterChecked()" />
+    </div>
+  </div>
+</li>

@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.yusufsezer</groupId>
+        <artifactId>jax-rs-example</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.yusufsezer</groupId>
+    <artifactId>server</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>server</name>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <mvn-compiler-plugin.version>3.8.1</mvn-compiler-plugin.version>
+        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
+        <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
+        <replacer.version>1.5.3</replacer.version>
+        
+        <jersey.version>2.31</jersey.version>
+        <jaxb.version>2.3.3</jaxb.version>
+        <swagger.version>2.1.4</swagger.version>
+        <swagger-ui.version>3.30.0</swagger-ui.version>
+        <swagger-ui.targetPath>swagger</swagger-ui.targetPath>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <openapi.path>/jax-rs-example/webapi/openapi.json</openapi.path>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.glassfish.jersey</groupId>
+                <artifactId>jersey-bom</artifactId>
+                <version>${jersey.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.yusufsezer</groupId>
+            <artifactId>jax-rs-example</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId>
+            <!-- use the following artifactId if you don't need servlet 2.x compatibility -->
+            <!-- artifactId>jersey-container-servlet</artifactId -->
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+        </dependency>
+        <!--uncomment this to get JSON support-->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-binding</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-jaxrs2 -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <!-- Build with specified Java version. -->
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${mvn-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <!-- Download Swagger UI webjar. -->
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>swagger-ui</artifactId>
+                                    <version>${swagger-ui.version}</version>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}/swagger-ui</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <!-- Add Swagger UI resources to the war file. -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven-war-plugin.version}</version>
+                <configuration>
+                    <webResources combine.children="append">
+                        <resource>
+                            <directory>${project.build.directory}/swagger-ui/META-INF/resources/webjars/swagger-ui/${swagger-ui.version}</directory>
+                            <includes>
+                                <include>**/*.*</include>
+                            </includes>
+                            <targetPath>${swagger-ui.targetPath}</targetPath>
+                        </resource>
+                        <resource>
+                            <directory>${project.parent.basedir}/client/dist/contact-client/</directory>
+                            <includes>
+                                <include>**/*.*</include>
+                            </includes>
+                            <targetPath>/</targetPath>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <!-- Replace the OpenAPI specification example URL with the local one. -->
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>${replacer.version}</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <file>${project.build.directory}/swagger-ui/META-INF/resources/webjars/swagger-ui/${swagger-ui.version}/index.html</file>
+                    <replacements>
+                        <replacement>
+                            <token>https://petstore.swagger.io/v2/swagger.json</token>
+                            <value>${openapi.path}</value>
+                        </replacement>
+                    </replacements>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

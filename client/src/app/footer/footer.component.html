@@ -1,0 +1,30 @@
+<!-- Footer -->
+<footer class="row bg-light border-top" *ngIf="wrapperService.globalService.footer">
+
+  <!-- Status -->
+  <div class="col-sm p-2 border-right clearfix">
+    <a [routerLink]="['/']" (click)="wrapperService.globalService.resetStatus()"
+      class="btn btn-light float-left bg-danger text-white"><i class="fa fa-times"></i> Close</a>
+    <a *ngIf="wrapperService.globalService.isAdd"
+      [routerLink]="['/']" (click)="wrapperService.addContact()"
+      [ngClass]="{disabled: !wrapperService.globalService.contactForm.valid}"
+      class="btn btn-light float-right bg-success text-white"><i class="fa fa-plus"></i> Add</a>
+    <a *ngIf="wrapperService.globalService.isEdit"
+      [routerLink]="['edit', wrapperService.globalService.currentContact.id]"
+      class="btn btn-light float-right bg-secondary text-white"><i class="fa fa-edit"></i> Edit</a>
+    <a *ngIf="wrapperService.globalService.isUpdate" (click)="wrapperService.updateContact()"
+      [routerLink]="['contact', wrapperService.globalService.currentContact.id]"
+      [ngClass]="{disabled: !wrapperService.globalService.contactForm.valid}"
+      class="btn btn-light float-right bg-success text-white"><i class="fa fa-check"></i> Update</a>
+    <a *ngIf="wrapperService.globalService.isDelete" (click)="wrapperService.deleteContact()"
+      class="btn btn-light float-right bg-warning text-white"><i class="fa fa-edit"></i> Delete</a>
+    <a *ngIf="wrapperService.globalService.isDeleteAll" (click)="wrapperService.deleteContacts()"
+      class="btn btn-light float-right bg-warning text-white"><i class="fa fa-edit"></i> Delete All</a>
+    <div class="text-center pt-2">
+      <span *ngIf="wrapperService.globalService.isSelect">{{ wrapperService.globalService.selectedCount }} contact
+        selected</span>
+      <span *ngIf="wrapperService.globalService.isAdd">Add new contact</span>
+    </div>
+  </div>
+
+</footer>
